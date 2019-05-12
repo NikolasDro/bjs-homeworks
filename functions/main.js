@@ -1,38 +1,46 @@
 "use strict";
 //задача 1
 function getSolutions( a, b, c ) {
-    let d = (b ** 2 - 4 * a * c);
-    let x1 = ((- b + Math.sqrt(d)) / (2 * a));
-    let x2 = ((- b - Math.sqrt(d)) / (2 * a));
-    let x = [x1, x2]
-    if (d < 0) {
-      return `D :`  + d;
-    }else if (d == 0){
-      return `{ roots: [ ${x[0]}], D: ${d} }`;
-    }else if (d > 0){
-      return `{ roots: [ ${x}], D: ${d} }`;
-    }
-  }
+  let D = (b ** 2 - 4 * a * c);
   
-  getSolutions( 4, 4, 1 );
+  if (D < 0) {
+    return {
+      D
+    }
+  }else if (D == 0){
+    let x1 = (- b / (2 * a));
+    return { 
+      roots: [x1], 
+      D
+    }
+  }else if (D > 0){
+    let x1 = ((- b + Math.sqrt(D)) / (2 * a));
+    let x2 = ((- b - Math.sqrt(D)) / (2 * a));
+    return { 
+      roots: [x1, x2], 
+      D
+    }
+  } 
+}
 
-  function showSolutionsMessage( a, b, c ) {
-    let d = (b ** 2 - 4 * a * c);
-    let x1 = ((- b + Math.sqrt(d)) / (2 * a));
-    let x2 = ((- b - Math.sqrt(d)) / (2 * a));
-    let x = [x1, x2]
-    if (d < 0) {
-      console.log(`Вычисляем корни квадратного уравнения ${a}x² + ${b}x + ${c}\nЗначение дискриминанта: ${d}\nУравнение не имеет вещественных корней`);
-    }else if (d == 0){
-      console.log(`Вычисляем корни квадратного уравнения ${a}x² + ${b}x + ${c}\nЗначение дискриминанта: ${d}\nУравнение имеет один корень X₁ = ${x1}`);
-    }else if (d > 0){
-      console.log(`Вычисляем корни квадратного уравнения ${a}x² + ${b}x + ${c}\nЗначение дискриминанта: ${d}\nУравнение имеет два корня. X₁ = ${x1}, X₂ = ${x2}`);
-    }
+getSolutions( 2, 4, 1 );
+
+
+function showSolutionsMessage( a, b, c ) {
+  let result = getSolutions( a, b, c );
+  console.log(`Вычисляем корни квадратного уравнения ${a}x² + ${b}x + ${c}\nЗначение дискриминанта: ${result.D}`);
+  if (result.D < 0) {
+    console.log(`Уравнение не имеет вещественных корней`);
+  }else if (result.D == 0){
+    console.log(`Уравнение имеет один корень X₁ = ${result.roots[0]}`);
+  }else if (result.D > 0){
+    console.log(`Уравнение имеет два корня. X₁ = ${result.roots[0]}, X₂ = ${result.roots[1]}`);
   }
-  
-  showSolutionsMessage( 1, 2, 3 );
-  showSolutionsMessage( 7, 20, -3 );
-  showSolutionsMessage( 2, 4, 2 );
+}
+
+showSolutionsMessage( 1, 2, 3 );
+showSolutionsMessage( 7, 20, -3 );
+showSolutionsMessage( 2, 4, 2 );
 
 //задача 2
 function getAverageScore(data) {
