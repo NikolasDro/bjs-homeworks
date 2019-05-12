@@ -11,8 +11,9 @@ function calculateQuadraticEquation(){
 
 function getResult(a,b,c){
   let d = (b ** 2 - 4 * a * c);
-  let x1 = ((- b + Math.sqrt(d)) / (2 * a));
-  let x2 = ((- b - Math.sqrt(d)) / (2 * a));
+  let D = Math.abs(d);
+  let x1 = ((- b + Math.sqrt(D)) / (2 * a));
+  let x2 = ((- b - Math.sqrt(D)) / (2 * a));
   let x = [x1, x2];
   if (d < 0) {
     return "Корней нет";
@@ -33,16 +34,14 @@ function calculateDrinkTask(){
 
 function askDrink(name, dateOfBirthday) {
     // Текущий год
-    let year = ( new Date().getFullYear());
-    let age = year - dateOfBirthday;
+    let year = new Date();
+    let age = (((year.getDate() - dateOfBirthday.getDate()) + (30 * (year.getMonth() - dateOfBirthday.getMonth())) + (365 * (year.getFullYear() - dateOfBirthday.getFullYear()))) / 365);
+
     if (age < 18) {
       return `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
     }else if(age => 18) {
       return `Не желаете ли олд-фэшн, ${name}?`;
     }
-    
-    //console.log(result)
-    //return result;
 }
 
 function calculateAverageRating(){
@@ -54,15 +53,16 @@ function calculateAverageRating(){
 function getAverageMark(marks){
     let total = 0;
     let max;
+    
+  if (marks.length >= 5) {
+    max = " - Среднее из пяти первых оценок";
+    marks.length = 5;
+  }else{
+    max = "";
+  }
+
+
   for (let i = 0; i < marks.length; i++) {
-    if (marks.length < 5) {
-        max = "";
-    }else if(marks.length == 5) {
-        max = " - Среднее из пяти оценок";
-    }else if(marks.length > 5) {
-        max = " - Среднее из пяти оценок";
-        marks.length = 5;
-    }
     total += marks [ i ]/ marks.length;
   }
   
