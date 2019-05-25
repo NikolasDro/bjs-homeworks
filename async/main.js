@@ -1,46 +1,38 @@
 "use strict";
 
 function setDailyRhythm(wakeUpTime, bedTime){
-    checkTimeMorning(wakeUpTime);
-    checkTimeNight(bedTime);
-};
+    const morning = () => alert('Доброе утро, Вася!');
+    const night = () => alert('Спокойной ночи, Вася!');
 
-const morning = () => alert('Доброе утро, Вася!');
-const night = () => alert('Спокойной ночи, Вася!');
+    const checkTimeMorning = setAlarm(wakeUpTime, morning);
+    const checkTimeNight = setAlarm(bedTime, night);
 
-const checkTimeMorning = setAlarm('07:00', morning);
-const checkTimeNight = setAlarm('23:00', night);
-
-
+    setInterval(checkTimeMorning, 1000);
+    setInterval(checkTimeNight, 1000);
+}
 
 function setAlarm(time, callback){
-    function result(sistemTime) {
-        const timeNow = new Date();
-        const hours = timeNow.getHours();
-        const minutes = timeNow.getMinutes();
+    function result() {
+        let hours = new Date().getHours();
+        let minutes = new Date().getMinutes();
         
+
+        if (hours < 10){
+            hours = `0${hours}`;
+        }
         if (minutes < 10) {
-            sistemTime = `${hours}:0${minutes}`;
-        }else{
-            sistemTime = `${hours}:${minutes}`;
-        };
+            minutes = `0${minutes}`;
+        }
+        
+        let sistemTime = String(`${hours}:${minutes}`)
 
         if (sistemTime === time) {
-            callback();
+           return callback();
         }
         console.log(sistemTime);
     }
     return result;
 }
 
-setInterval(setDailyRhythm, 1000);
 
-
-
-
-
-//const checkTimeMorning = setAlarm('11:35', morning);
-//const checkTimeNight = setAlarm('23:00', night);
-
-//console.log(`${new Date().getHours()}:${new Date().getMinutes()}`);
-
+setDailyRhythm('08:45','23:00');
